@@ -1,0 +1,157 @@
+/* style.css — estilo compartilhado por index.html e documentacao.html */
+
+:root {
+  --azul: #2980b9;
+  --vermelho: #e74c3c;
+  --tinta: #1f2933;
+  --cinza: #52606d;
+  --borda: #e1e5ea;
+  --fundo: #f4f6f9;
+  --card: #ffffff;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--tinta);
+  background: var(--fundo);
+  line-height: 1.6;
+}
+
+.topo {
+  background: linear-gradient(135deg, #2c3e50, #2980b9);
+  color: #fff;
+  padding: 2rem 1.5rem 1.5rem;
+  text-align: center;
+}
+.topo h1 { margin: 0 0 .25rem; font-size: 1.6rem; }
+.subtitulo { margin: 0 0 .75rem; opacity: .9; }
+.topo nav a { color: #fff; text-decoration: underline; }
+
+main {
+  max-width: 960px;
+  margin: 1.5rem auto;
+  padding: 0 1rem;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.25rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,.04);
+}
+.card h2 { margin-top: 0; font-size: 1.2rem; }
+
+button {
+  background: var(--azul);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: .7rem 1.4rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background .15s ease;
+}
+button:hover:not(:disabled) { background: #1f6391; }
+button:disabled { opacity: .6; cursor: not-allowed; }
+
+/* Barra de progresso */
+#progresso-container { margin-top: 1.25rem; }
+.barra-fundo {
+  width: 100%;
+  height: 18px;
+  background: #e6eaef;
+  border-radius: 999px;
+  overflow: hidden;
+}
+.barra-preenchida {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #27ae60, #2ecc71);
+  transition: width .25s ease;
+}
+.progresso-rotulo {
+  margin: .5rem 0 0;
+  font-size: .9rem;
+  color: var(--cinza);
+}
+
+/* Gráfico */
+.grafico-wrapper { position: relative; height: 420px; }
+
+/* Gráficos individuais lado a lado */
+.graficos-lado-a-lado {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+.grafico-individual { height: 320px; }
+
+@media (max-width: 680px) {
+  .graficos-lado-a-lado { grid-template-columns: 1fr; }
+}
+
+.legenda-eixos {
+  font-size: .85rem;
+  color: var(--cinza);
+  text-align: center;
+  margin: .75rem 0 0;
+}
+
+/* Tabela */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: .5rem;
+}
+th, td {
+  padding: .6rem .75rem;
+  text-align: right;
+  border-bottom: 1px solid var(--borda);
+}
+th:first-child, td:first-child { text-align: left; }
+thead th {
+  background: #f0f3f7;
+  font-size: .85rem;
+  color: var(--cinza);
+}
+tbody tr:nth-child(odd) { background: #fafbfc; }
+
+.rodape {
+  text-align: center;
+  color: var(--cinza);
+  font-size: .85rem;
+  padding: 1.5rem 1rem 2.5rem;
+}
+
+/* ----- Documentação ----- */
+.doc { max-width: 820px; }
+.doc h2 { border-bottom: 2px solid var(--borda); padding-bottom: .3rem; }
+.doc h3 { color: var(--azul); margin-top: 1.5rem; }
+.doc pre {
+  background: #1f2933;
+  color: #e6e6e6;
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: .85rem;
+}
+.doc code { font-family: "SFMono-Regular", Consolas, monospace; }
+.doc :not(pre) > code {
+  background: #eef1f5;
+  padding: .1rem .35rem;
+  border-radius: 4px;
+  font-size: .9em;
+}
+.doc table th, .doc table td { text-align: left; }
+.nota {
+  background: #fff8e1;
+  border-left: 4px solid #f1c40f;
+  padding: .75rem 1rem;
+  border-radius: 4px;
+  margin: 1rem 0;
+}

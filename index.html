@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Experimento — Busca Binária</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="topo">
+    <h1>Comparação Experimental de Algoritmos de Busca Binária</h1>
+    <p class="subtitulo">
+      Catálogo de e-commerce ordenado por ID · Análise de Algoritmos
+    </p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Experimento</h2>
+      <p>
+        Compara duas implementações recursivas de busca binária — uma que
+        <strong>copia o subvetor</strong> a cada chamada e outra que usa
+        <strong>apenas índices</strong> — medindo o tempo médio de execução
+        para catálogos de tamanhos crescentes.
+      </p>
+
+      <button id="btn-iniciar" type="button">▶ Iniciar Experimento</button>
+
+      <div id="progresso-container" hidden>
+        <div class="barra-fundo" role="progressbar" aria-valuemin="0"
+             aria-valuemax="100" aria-valuenow="0">
+          <div id="barra-progresso" class="barra-preenchida"></div>
+        </div>
+        <p id="progresso-rotulo" class="progresso-rotulo">Preparando…</p>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Gráficos individuais</h2>
+      <p>
+        Cada algoritmo isolado, com escala de Y própria — assim fica visível o
+        crescimento de cada um por si só.
+      </p>
+      <div class="graficos-lado-a-lado">
+        <div class="grafico-wrapper grafico-individual">
+          <canvas id="grafico-copia"></canvas>
+        </div>
+        <div class="grafico-wrapper grafico-individual">
+          <canvas id="grafico-indices"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Gráfico comparativo</h2>
+      <div class="grafico-wrapper">
+        <canvas id="grafico"></canvas>
+      </div>
+      <p class="legenda-eixos">
+        Eixo X: tamanho da entrada (escala logarítmica) ·
+        Eixo Y: tempo médio em microssegundos (µs)
+      </p>
+    </section>
+
+    <section class="card" id="resultados" hidden>
+      <h2>Dados brutos</h2>
+      <table id="tabela-dados">
+        <thead>
+          <tr>
+            <th>Tamanho da entrada</th>
+            <th>Tempo médio Alg. 1 — cópia (µs)</th>
+            <th>Tempo médio Alg. 2 — índices (µs)</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <p>Dica: abra o console (F12) para conferir a verificação de corretude.</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+
+  <script src="src/config.js"></script>
+  <script src="src/algorithms.js"></script>
+  <script src="src/ui.js"></script>
+  <script src="src/experiment.js"></script>
+
+  <script>
+    // Orquestração da UI: ao clicar, roda o experimento e exibe os resultados.
+    const btn = document.getElementById('btn-iniciar');
+    const progressoContainer = document.getElementById('progresso-container');
+
+    btn.addEventListener('click', async () => {
+      btn.disabled = true;
+      btn.textContent = '⏳ Executando…';
+      progressoContainer.hidden = false;
+      atualizarProgresso(0, CONFIG.NUM_SIZES);
+
+      try {
+        const dados = await executarExperimento(atualizarProgresso);
+        renderGraficos(dados);
+        renderTabela(dados);
+        document.getElementById('progresso-rotulo').textContent =
+          '✅ Experimento concluído.';
+      } catch (erro) {
+        console.error('Falha ao executar o experimento:', erro);
+        document.getElementById('progresso-rotulo').textContent =
+          '❌ Ocorreu um erro — veja o console.';
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '▶ Reexecutar Experimento';
+      }
+    });
+  </script>
+</body>
+</html>
